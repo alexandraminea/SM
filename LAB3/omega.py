@@ -20,7 +20,8 @@ def show(current, final, level):
     # bitul de pe nivelul curent din output
     current_digit_from_output = final[level]
 
-    # adaugare bit de output la sf current
+    # adaugare bit_output_nivel_curent la sf blocului curent
+    # adica alegerea iesirii in blocul respectiv ex: 101 = 10(bloc 2) + 1(iesire)
     bloc.append(current_digit_from_output)
 
     if last_from_current == current_digit_from_output:
