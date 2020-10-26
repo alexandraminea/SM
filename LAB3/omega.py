@@ -29,13 +29,12 @@ def show(current, final, level):
         print(f"LEVEL: {level} INVERS")
 
     current = bloc
-    print(current)
+    # print(f"Chose: {current}")
     show(shuffle_once(current), final, level + 1)
 
-intrare = [0, 0, 1]
-iesire = [1, 0, 0]
-
-show(shuffle_once(intrare), iesire, 0)
+# intrare = [1, 0, 1]
+# iesire = [1, 0, 0]
+# show(shuffle_once(intrare), iesire, 0)
 
 lists = []
 
@@ -46,10 +45,10 @@ for k in range (1, 6):
     lists.append(tmp)
 
 # print(lists)
-
+print("-------- GENERATING RANDOM INPUT --------")
 for i in range(1, 5):
     print()
-    print(f"Random test for {i+1}-bit numbers")
+    print(f"----- Random test for {i+1}-bit numbers -----")
     random.seed(10)
     j = random.randint(1, i)
     intrare = list(lists[i][j])
@@ -57,5 +56,5 @@ for i in range(1, 5):
     iesire = list(lists[i][k])
     print("Intrare: " + str(intrare))
     print("Iesire: " + str(iesire))
-    show(intrare, iesire, 0)
+    show(shuffle_once(intrare), iesire, 0)
 
