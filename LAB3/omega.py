@@ -32,10 +32,10 @@ def show(current, final, level):
     print(current)
     show(shuffle_once(current), final, level + 1)
 
-intrare = [1, 0, 1]
-iesire = [1, 1, 0]
+intrare = [0, 0, 1]
+iesire = [1, 0, 0]
 
-# show(intrare, iesire, 0)
+show(shuffle_once(intrare), iesire, 0)
 
 lists = []
 
