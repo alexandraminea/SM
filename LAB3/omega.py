@@ -49,7 +49,7 @@ print("-------- GENERATING RANDOM INPUT --------")
 for i in range(1, 5):
     print()
     print(f"----- Random test for {i+1}-bit numbers -----")
-    random.seed(10)
+    random.seed(11)
     j = random.randint(1, i)
     intrare = list(lists[i][j])
     k = random.randint(1, i)
