@@ -37,7 +37,7 @@ def out_block(in_current, leg):
         output = change_last_bit(in_current)
     return output
 
-# GET THE INPUT IN THE CURRENT BLOCK BASED ON THE SHUFFLE ALGORITM
+# GET THE INPUT IN THE CURRENT BLOCK BASED ON THE SHUFFLE ALGORITHM
 def in_block(out_previous, shuffle_type):
     in_current = []
     if shuffle_type == "SHUFFLE":
