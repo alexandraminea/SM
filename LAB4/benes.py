@@ -95,7 +95,7 @@ def benes(in_current, output, leg):
     in_next_benes = in_b1[1:]
     out_next_benes = output[:-1]
     
-    # obs aici trb introdusa si varianta cu INVERS 
+    # obs aici trb introdusa si varianta cu INVERSE
     benes(in_next_benes, out_next_benes, random_choose())
 
     out_next_benes.insert(0, block_index)
@@ -110,6 +110,6 @@ if __name__ == '__main__':
     out = [0, 0, 0, 1]
     print(f"INPUT: {input}, OUTPUT: {out}")
 
-    print("The algoritm makes random choices between DIRECT/INVERS at each step")
+    print("The algorithm makes random choices between DIRECT/INVERS at each step")
     print("Two consecutive runs could produce different (but correct) output")
     benes(input, out, random_choose())
