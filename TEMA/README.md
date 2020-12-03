@@ -32,7 +32,7 @@ Pentru aceasta imagine, timpul de rulare seriala este de aproximativ 20-25s.
 ## Implementare seriala
 
 Programul citeste o imagine in format .bmp (bitmap), efectueaza operatiile la nivel de pixel si compune din acestia o noua imagine.
-*Obs: Pentru analiza implementarilor paralele am masurat durata executiei operatiilor de conversie.
+* Obs: Pentru analiza implementarilor paralele am masurat durata executiei operatiilor de conversie.
 
 
 ## Implemetare cu pthreads
