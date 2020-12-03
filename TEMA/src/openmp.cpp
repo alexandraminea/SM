@@ -154,6 +154,7 @@ int main(int argc, char *argv[])
     byte *pixels;
     int32 width, height;
     int32 bytesPerPixel;
+    double t1,t2;
     string filename = "input/" + string(argv[1]) + ".bmp";
     string out_filename = "out/" + string(argv[1]) + "_result.bmp";
 
@@ -165,7 +166,7 @@ int main(int argc, char *argv[])
         RGBtoHSL(pixels + i * 3);
     }
     t2 = omp_get_wtime();
-    
+    printf("Duration: %f\n",t2-t1);
     WriteImage(out_filename.c_str(), pixels, width, height, bytesPerPixel); 
     free(pixels);
 
