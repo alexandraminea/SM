@@ -5,9 +5,13 @@
 $ make serial
 $ make pthreads
 $ make openmp
+$ make mpi_prog
+$ make hibrid
 $ ./serial test3
 $ ./pthreads test3
 $ ./openmp test3
+$ mpirun -np <num_procs> mpi_prog test3
+$ mpirun -np <num_procs> hibrid test3
 ```
 
 ## Input si output
@@ -15,7 +19,9 @@ $ ./openmp test3
 Imaginile test sunt in folederul input, iar dupa rularea programului, imaginile editate sunt adaugate in folderul out.
 Cea mai mare imagine(pe care se vor face testele relevante in continuare) are dimeniunea 18848 x 13621(pixels).
 <br/>
+<br/>
 ![Alt text](captures/huge.PNG?raw=true "Image")
+<br/>
 <br/>
 Pentru aceasta imagine, timpul de rulare seriala este de aproximativ 20-25s.
 <br/>
@@ -30,7 +36,8 @@ Programul citeste o imagine in format .bmp (bitmap), efectueaza operatiile la ni
 
 ## Implemetare cu pthreads
 
-Timp rulare paralela:
+Timpi de rulare.
+
     1 thread - 22.45s
     2 threaduri - 14.9423s
     3 threaduri - 9.12311s
@@ -44,7 +51,8 @@ Acesti timpi sunt justificati de numerul de core-uri = 4
 
 ## Implementare openmp
 
-Timp rulare paralela:
+Timpi de rulare.
+
     1 thread    -   22.45s
     2 threaduri -   11.9753s
     3 threaduri -   9.429637
