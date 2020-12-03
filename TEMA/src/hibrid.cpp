@@ -10,8 +10,9 @@
 #include<algorithm>
 #include <initializer_list>
 #include <sys/time.h>
-#include <pthread.h>
+#include "mpi.h"
 
+#define MASTER 0
 using namespace std;
 
 #define DATA_OFFSET_OFFSET 0x000A
@@ -149,19 +150,6 @@ void RGBtoHSL(byte *src){
     src[2] = int(l * 255);
 }
 
-int thread_work;
-
-void *threadFunction(void *args)
-{
-    int j;
-    byte *img = (byte*)args;
-    for (j = 0; j < thread_work; j+=3)
-    {
-        RGBtoHSL(img + j);
-    }
-    return 0;
-}
-
 void convert_image(int32 width, int32 height, byte **pixels)
 {
     for (int i = 0; i < width * height; i++) {
@@ -171,36 +159,50 @@ void convert_image(int32 width, int32 height, byte **pixels)
 
 int main(int argc, char *argv[])
 {
-    byte *pixels;
+    byte *pixels, *img;
     int32 width, height;
     int32 bytesPerPixel;
-    int i, numThreads;
+    int chunk_size;
     string filename = "input/" + string(argv[1]) + ".bmp";
     string out_filename = "out/" + string(argv[1]) + "_result.bmp";
 
-    ReadImage(filename.c_str(), &pixels, &width, &height,&bytesPerPixel);
-
     struct timeval start, end;
 
-    cout << "Enter number of threads\n";
-    cin >> numThreads;
-    thread_work = width * height * 3 / numThreads;
-    pthread_t *threads = (pthread_t*)malloc(numThreads * sizeof(pthread_t));
+    int nProcesses, rank;
+    
+    // MPI init
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &nProcesses);
 
-    gettimeofday(&start, NULL);
-    for(i = 0; i < numThreads; i++){
-        pthread_create(threads + i, NULL, threadFunction, pixels+i*thread_work);
+    if(rank == MASTER){
+        ReadImage(filename.c_str(), &pixels, &width, &height,&bytesPerPixel);
+        chunk_size = width * height * 3 / nProcesses;
+        gettimeofday(&start, NULL);
     }
 
-    for (i = 0; i < numThreads; i++){
-        pthread_join(threads[i], NULL);
+    MPI_Bcast(&chunk_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+    img = (byte*)malloc(chunk_size*sizeof(byte));
+
+    MPI_Scatter(pixels, chunk_size, MPI_CHAR, img, chunk_size, MPI_CHAR, 0, MPI_COMM_WORLD);
+
+    # pragma omp parallel for schedule(static)
+    for (int i = 0; i < chunk_size; i+=3) {
+        RGBtoHSL(img + i);
     }
 
-    gettimeofday(&end, NULL);
-    printf("Duration: %.4f s\n", end.tv_sec + end.tv_usec / 1000000.0 - start.tv_sec - start.tv_usec / 1000000.0);
+    /* Facem gather la datele calculate */
+    MPI_Gather(img, chunk_size, MPI_CHAR, pixels, chunk_size, MPI_CHAR, 0, MPI_COMM_WORLD);
 
-    //WriteImage(out_filename.c_str(), pixels, width, height, bytesPerPixel); 
-    free(pixels);
+    if(rank == MASTER){
+        gettimeofday(&end, NULL);
+        printf("Duration: %.4f s\n", end.tv_sec + end.tv_usec / 1000000.0 - start.tv_sec - start.tv_usec / 1000000.0);
+        //WriteImage(out_filename.c_str(), pixels, width, height, bytesPerPixel); 
+        free(pixels);
+    }
+
+    MPI_Finalize();
 
     return 0;
 }

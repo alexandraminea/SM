@@ -166,8 +166,8 @@ int main(int argc, char *argv[])
         RGBtoHSL(pixels + i * 3);
     }
     t2 = omp_get_wtime();
-    printf("Duration: %f\n",t2-t1);
-    WriteImage(out_filename.c_str(), pixels, width, height, bytesPerPixel); 
+    printf("Duration: %f\n",t2-t1);   
+    //WriteImage(out_filename.c_str(), pixels, width, height, bytesPerPixel); 
     free(pixels);
 
     return 0;

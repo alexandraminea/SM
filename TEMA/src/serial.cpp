@@ -9,6 +9,7 @@
 #include <tuple> 
 #include<algorithm>
 #include <initializer_list>
+#include <sys/time.h>
 
 using namespace std;
 
@@ -163,8 +164,11 @@ int main(int argc, char *argv[])
     string out_filename = "out/" + string(argv[1]) + "_result.bmp";
 
     ReadImage(filename.c_str(), &pixels, &width, &height,&bytesPerPixel);
+    struct timeval start, end;
+    gettimeofday(&start, NULL);
     convert_image(width, height, &pixels);
-    
+    gettimeofday(&end, NULL);
+    printf("Duration: %.4f s\n", end.tv_sec + end.tv_usec / 1000000.0 - start.tv_sec - start.tv_usec / 1000000.0);
     WriteImage(out_filename.c_str(), pixels, width, height, bytesPerPixel); 
     free(pixels);
 
