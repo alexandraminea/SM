@@ -25,6 +25,7 @@ Cea mai mare imagine(pe care se vor face testele relevante in continuare) are di
 <br/>
 Pentru aceasta imagine, timpul de rulare seriala este de aproximativ 20-25s.
 <br/>
+<br/>
 ![Alt text](captures/out_huge.PNG?raw=true "Image")
 <br/>
 
