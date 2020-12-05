@@ -81,7 +81,7 @@ OMP_NUM_THREADS = constant(4)
     3 proc - 9.8525 s
     4 proc - 6.8517 s
 
-## Graficul pentru speedup-ul obtinut in fiecare situatie
+## Graficul pentru speedup-ul obtinut cu fiecare implementare
 
 <br/>
 ![Alt text](captures/speedup.png?raw=true "Image 2")
