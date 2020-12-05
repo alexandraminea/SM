@@ -84,5 +84,5 @@ OMP_NUM_THREADS = constant(4)
 Graficul pentru speedup-ul obtinut in fiecare situatie:
 
 <br/>
-![Alt text](captures/speedup.PNG?raw=true "Image")
+![Alt text](captures/speedup.png?raw=true "Image")
 <br/>
